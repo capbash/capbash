@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# delegating to bootstrap
+./submodules/bootstrap/deploy $@
