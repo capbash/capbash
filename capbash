@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # delegating to bootstrap
-./submodules/bootstrap/deploy $@
+./submodules/bootstrap/capbash $@
