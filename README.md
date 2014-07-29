@@ -18,6 +18,32 @@ cd YOUR_REPO_ROOT
 ./bootstrap
 ```
 
+# Server Preconditions #
+
+Please ensure your new server has a root password, and that an ssh server / client is installed.  For example,
+
+This will allow you give your root user a password:
+
+```
+sudo su root
+passwd
+```
+
+And, this will install an ssh server / client on Ubuntu.
+
+```
+apt-get install openssh-server openssh-client
+```
+
+CHEF works as root, so you will need to enable root login.
+```
+vi /etc/ssh/sshd_config
+
+# Change PermitRootLogin to be
+PermitRootLogin yes
+```
+
+
 # Deploy to Remote Server #
 
 To push the helloworld script to your server, all you need if the IP or hostname of your server (e.g. 192.167.0.48) and your root password.
