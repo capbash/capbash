@@ -13,13 +13,13 @@ This allows you to clone the project, make it your own and still stay up on the 
 You will need to download the installer and run it.  This can be down with curl, as follows:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash
+curl -s https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash
 ```
 
 This will install capbash into /usr/local/bin/bash.  To install it somewhere else, for example:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash -s -- --path ~/.bin
+curl -s https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash -s -- --path ~/.bin
 ```
 
 
