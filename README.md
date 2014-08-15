@@ -94,9 +94,17 @@ capbash install docker
 
 We are working on more submodules, as well as a registry to support third party modules.
 
-# How to update capbash and all submodules #
+# How to update capbash #
 
-This is pull all submodules, including capbash itself.
+To get the latest capbash capabilities, run
+
+```bash
+capbash update-self
+```
+
+# How to project specific modules #
+
+From within your project, you can update all modules.
 
 ```bash
 capbash update
