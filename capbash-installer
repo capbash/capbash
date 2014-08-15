@@ -42,6 +42,8 @@ EOF
   )
 
   printf "$SCRIPT" > ${capbash_path}/capbash
+  chmod 755 ${capbash_path}/capbash
+  echo "Done, to uninstall 'rm ${capbash_path}/capbash'."
 }
 
 capbash_install "$@"
