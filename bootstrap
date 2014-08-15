@@ -1,4 +1,0 @@
-#!/bin/bash
-mkdir -p ./submodules
-git submodule add https://github.com/aforward/capbash-bootstrap ./submodules/bootstrap
-./submodules/bootstrap/bootstrap

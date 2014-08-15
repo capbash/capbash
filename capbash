@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [[ "$1" == "new" ]]; then
-  git clone https://github.com/aforward/capbash $1
-  (cd $1 && ./bootstrap)
-else
-  # delegating to bootstrap
-  ./submodules/bootstrap/capbash $@
-fi

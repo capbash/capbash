@@ -31,17 +31,31 @@ capbash_install()
   echo "Installing capbash into $capbash_path"
 
   SCRIPT=$(cat <<EOF
-if [[ "$1" == "new" ]]; then
-  git clone https://github.com/aforward/capbash $1
-  (cd $1 && ./bootstrap)
+#!/usr/bin/env bash
+if [[ "\$1" == "new" ]]; then
+  NAME=\${2-devops}
+  if [[ -e \$NAME ]]; then
+    echo "Directory \$NAME already exists, remove it and try again or pick another name please."
+    exit 1
+  else
+    mkdir -p \$NAME
+    (
+      cd \$NAME &&
+      git init
+      mkdir -p ./submodules &&
+      git submodule add https://github.com/aforward/capbash-bootstrap ./submodules/bootstrap &&
+      ./submodules/bootstrap/bootstrap
+    )
+  fi
+
 else
   # delegating to bootstrap
-  ./submodules/bootstrap/capbash $@
+  ./submodules/bootstrap/capbash \$@
 fi
 EOF
   )
 
-  printf "$SCRIPT" > ${capbash_path}/capbash
+  printf "${SCRIPT}\n" > ${capbash_path}/capbash
   chmod 755 ${capbash_path}/capbash
   echo "Done, to uninstall 'rm ${capbash_path}/capbash'."
 }
