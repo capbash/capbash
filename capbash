@@ -1,5 +1,36 @@
 #!/usr/bin/env bash
-if [[ "$1" == "new" ]]; then
+
+usage()
+{
+  printf "%b" "
+Usage
+
+  capbash [action]
+
+Global Actions (applies outside of any particular project)
+
+  update-self             - Updates capbash to the lastest version
+  ls                      - Show all available modules (e.g. docker, nginx)
+  help                    - Displays this output.
+
+Project Actions (applies to a specific project, and must be run from within that project)
+
+  udpate                  - Updates all project modules, including the capbash bootstrap
+  install <module>        - Installs a particular module into your project, e.g. 'capbash install docker'
+
+Deployment Actions (applies to a specific project, and is geared towards running things on remote servers)
+
+  deploy <server> <node>  - Deploys to server (e.g. 192.169.10.11) and node (install scripts located in ./nodes directory)
+  sync <server>           - Synchronizes project on remote server, but does not install / configure the node
+
+"
+}
+
+if [[ "$1" == "help" ]]; then
+  usage
+  exit 0
+
+elif [[ "$1" == "new" ]]; then
   NAME=${2-devops}
   if [[ -e $NAME ]]; then
     echo "Directory $NAME already exists, remove it and try again or pick another name please."
@@ -14,6 +45,7 @@ if [[ "$1" == "new" ]]; then
       ./submodules/bootstrap/bootstrap
     )
   fi
+
 elif [[ "$1" == "update-self" ]]; then
   current_capbash_filename=$(which capbash)
   curl -s -o $current_capbash_filename https://raw.githubusercontent.com/aforward/capbash/master/capbash
