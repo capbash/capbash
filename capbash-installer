@@ -15,20 +15,32 @@ capbash_parse_params()
           capbash_path="$1"
           shift
         else
-          fail "--path must be followed by a path."
+          fail "--path must be followed by a path, e.g. /usr/local/bin."
         fi
         ;;
+
+      (--capbash)
+        if [[ -n "${1:-}" ]]
+        then
+          capbash_filename="$1"
+          shift
+        else
+          fail "--capbash must be followed by a filename, e.g. /usr/local/bin/capbash."
+        fi
+        ;;
+
 
     esac
   done
 
   capbash_path=${capbash_path-/usr/local/bin}
+  capbash_filename=${capbash_filename-${capbash_path}/capbash}
 }
 
 capbash_install()
 {
   capbash_parse_params "$@"
-  echo "Installing capbash into $capbash_path"
+  echo "Installing capbash into $capbash_filename"
 
   SCRIPT=$(cat <<EOF
 #!/usr/bin/env bash
@@ -47,17 +59,28 @@ if [[ "\$1" == "new" ]]; then
       ./submodules/bootstrap/bootstrap
     )
   fi
+elif [[ "\$1" == "update-self" ]]; then
+  curl -o \$capbash_filename -sSL https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer
+
+elif [[ "\$1" == "ls" ]]; then
+  # I know, I know... should be dynamic
+  echo "Available capbash submodules:"
+  echo " -- docker"
+  echo " -- monit"
+  echo " -- nginx"
+  echo " -- drupal"
+  echo " -- elixir"
 
 else
-  # delegating to bootstrap
+  # Project specific calls, delegating to bootstrap
   ./submodules/bootstrap/capbash \$@
 fi
 EOF
   )
 
-  printf "${SCRIPT}\n" > ${capbash_path}/capbash
-  chmod 755 ${capbash_path}/capbash
-  echo "Done, to uninstall 'rm ${capbash_path}/capbash'."
+  printf "${SCRIPT}\n" > ${capbash_filename}
+  chmod 755 ${capbash_filename}
+  echo "Done, to uninstall 'rm ${capbash_filename}'."
 }
 
 capbash_install "$@"

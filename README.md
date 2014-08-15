@@ -61,7 +61,7 @@ capbash new
 capbash new deploys
 ```
 
-This will create a new git project repository ready for remove deployment.
+This will create a new git project ready for remove deployment.
 
 
 # Deploy to Remote Server #
