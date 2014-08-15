@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+capbash_parse_params()
+{
+  while
+    (( $# > 0 ))
+  do
+    token="$1"
+    shift
+    case "$token" in
+
+      (--path)
+        if [[ -n "${1:-}" ]]
+        then
+          capbash_path="$1"
+          shift
+        else
+          fail "--path must be followed by a path."
+        fi
+        ;;
+
+    esac
+  done
+
+  capbash_path=${capbash_path-/usr/local/bin}
+}
+
+capbash_install()
+{
+  capbash_parse_params "$@"
+  echo "Installing capbash into $capbash_path"
+
+  SCRIPT=$(cat <<EOF
+if [[ "$1" == "new" ]]; then
+  git clone https://github.com/aforward/capbash $1
+  (cd $1 && ./bootstrap)
+else
+  # delegating to bootstrap
+  ./submodules/bootstrap/capbash $@
+fi
+EOF
+  )
+
+  printf "$SCRIPT" > ${capbash_path}/capbash
+}
+
+capbash_install "$@"
