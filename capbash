@@ -26,6 +26,23 @@ Deployment Actions (applies to a specific project, and is geared towards running
 "
 }
 
+ls_modules()
+{
+  printf "%b" "
+Available capbash submodules:
+  -- docker
+  -- monit
+  -- nginx
+  -- drupal
+  -- elixir
+
+To install docker, for example, run:
+  cd /path/to/your/devops/project
+  capbash install docker
+
+"
+}
+
 if [[ "$1" == "help" ]]; then
   usage
   exit 0
@@ -52,17 +69,7 @@ elif [[ "$1" == "update-self" ]]; then
   echo "Updated $current_capbash_filename"
 
 elif [[ "$1" == "ls" ]]; then
-  # I know, I know... should be dynamic
-  echo "Available capbash submodules:"
-  echo " -- docker"
-  echo " -- monit"
-  echo " -- nginx"
-  echo " -- drupal"
-  echo " -- elixir"
-  echo ""
-  echo "To install docker, for example, run:"
-  echo "  cd /path/to/your/devops/project"
-  echo "  capbash install docker"
+  ls_modules
   exit 0
 
 else
