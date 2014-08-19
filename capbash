@@ -36,6 +36,8 @@ Available capbash submodules:
   -- docker (docker up and running in a jiffy)
   -- elixir (installs a tagged version of elixir)
 
+  -- mysql (installs mysql in a docker container)
+
   -- drupal (installs a drupal admin console for deploying one or more instances of drupal)
   -- phoenix (installs phoenix web applications based on the elixir language)
   -- nginx (a webserver running mostly within a container)
