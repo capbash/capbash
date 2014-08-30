@@ -30,18 +30,19 @@ ls_modules()
 {
   printf "%b" "
 Available capbash submodules:
-  -- monit (for monitoring your server)
-  -- deploykeys (a simple public/private key manager to enable access to other servers / services)
-  -- git
-  -- docker (docker up and running in a jiffy)
-  -- elixir (installs a tagged version of elixir)
-
-  -- mysql (installs mysql in a docker container)
-
-  -- drupal (installs a drupal admin console for deploying one or more instances of drupal)
-  -- phoenix (installs phoenix web applications based on the elixir language)
-  -- nginx (a webserver running mostly within a container)
   -- apache (another webserver)
+  -- cron (manage cron jobs)
+  -- deploykeys (a simple public/private key manager to enable access to other servers / services)
+  -- docker (docker up and running in a jiffy)
+  -- drupal (installs a drupal admin console for deploying one or more instances of drupal)
+  -- elixir (installs a tagged version of elixir)
+  -- git
+  -- monit (for monitoring your server)
+  -- mysql (installs mysql in a docker container)
+  -- nginx (a webserver running mostly within a container)
+  -- phoenix (installs phoenix web applications based on the elixir language)
+  -- rails (installs rails web applications based on the ruby language)
+  -- tarball (extracts compressed files with ease)
 
 To install docker, for example, run:
   cd /path/to/your/devops/project
