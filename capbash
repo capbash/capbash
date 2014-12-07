@@ -9,6 +9,7 @@ Usage
 
 Global Actions (applies outside of any particular project)
 
+  new                     - Create a new capbash project
   update-self             - Updates capbash to the lastest version
   ls                      - Show all available modules (e.g. docker, nginx)
   help                    - Displays this output.
