@@ -10,6 +10,7 @@ Usage
 Global Actions (applies outside of any particular project)
 
   new                     - Create a new capbash project
+  init                    - Initialize a freshly checkout-out project, or when new git submodules are added
   update-self             - Updates capbash to the lastest version
   ls                      - Show all available modules (e.g. docker, nginx)
   help                    - Displays this output.
@@ -52,6 +53,10 @@ To install docker, for example, run:
   cd /path/to/your/devops/project
   capbash install docker
 
+When cloning an existing capbash project, don't forget to initialize your submodules
+  git clone my_new_ops_project.git myops
+  cd myops
+  capbash init
 "
 }
 

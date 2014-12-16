@@ -22,7 +22,6 @@ This will install capbash into /usr/local/bin/bash.  To install it somewhere els
 curl -s https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash -s -- --path ~/.bin
 ```
 
-
 # Server Preconditions #
 
 Please ensure your new server has a root password, and that an ssh server / client is installed.  For example,
@@ -63,6 +62,12 @@ capbash new deploys
 
 This will create a new git project ready for remove deployment.
 
+If you are cloning an existing repository, then you need to initialize the git submodules (if any):
+
+```bash
+# initialize git submodules
+cd /path/to/capbash_project
+capbash init
 
 # Deploy to Remote Server #
 
