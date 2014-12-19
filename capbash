@@ -85,6 +85,11 @@ elif [[ "$1" == "update-self" ]]; then
   curl -s -o $current_capbash_filename https://raw.githubusercontent.com/aforward/capbash/master/capbash
   echo "Updated $current_capbash_filename"
 
+elif [[ "$1" == "init" ]]; then
+  git submodule init
+  git submodule update
+  echo "Initialized submodules"
+
 elif [[ "$1" == "ls" ]]; then
   ls_modules
   exit 0
