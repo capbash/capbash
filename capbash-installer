@@ -40,10 +40,10 @@ capbash_parse_params()
 capbash_install()
 {
   capbash_parse_params "$@"
-  echo "Installing capbash into $capbash_filename"
-  curl -s -o $capbash_filename https://raw.githubusercontent.com/aforward/capbash/master/capbash
-  chmod 755 ${capbash_filename}
-  echo "Done, to uninstall 'rm ${capbash_filename}'."
+  echo "Installing capbash into \"$capbash_filename\""
+  curl -s -o "$capbash_filename" https://raw.githubusercontent.com/aforward/capbash/master/capbash
+  chmod 755 "${capbash_filename}"
+  echo "Done, to uninstall 'rm \"${capbash_filename}\"'."
 }
 
 capbash_install "$@"
