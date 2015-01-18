@@ -122,6 +122,9 @@ elif [[ "$1" == "new" ]]; then
       git init && \
       mkdir -p ./bits && \
       touch ./bits/.gitkeep && \
+      touch .gitignore && \
+      echo "assets" >> .gitignore && \
+      echo "nodes" >> .gitignore && \
       git add . && \
       git commit -m "Initial commit" && \
       git remote add bootstrap https://github.com/aforward/capbash-bootstrap.git && \
