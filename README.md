@@ -1,6 +1,8 @@
 capbash
 =======
 
+UPDATE!!! Capbash moved from submodules to subtrees.  Please remove all submodules, create a ./bits directory and re-add them (sorry for the backwards incompatible changes).
+
 A simple infrastructure tool that uses capistrano and bash to manage remote servers.
 
 This project is meant to change very little, and delegates most of its work to a bootstrap project, shown below:
@@ -62,12 +64,6 @@ capbash new deploys
 
 This will create a new git project ready for remove deployment.
 
-If you are cloning an existing repository, then you need to initialize the git submodules (if any):
-
-```bash
-# initialize git submodules
-cd /path/to/capbash_project
-capbash init
 
 # Deploy to Remote Server #
 
@@ -83,9 +79,9 @@ For example,
 capbash deploy 127.0.0.1
 ```
 
-# Adding Submodules #
+# Adding Bits (aka subtrees) #
 
-Install scripts are written in bash, and can be added to your project. First you will want to list our available submodules.
+Install scripts are written in bash, and can be added to your project. First you will want to list our available bits.
 
 ```bash
 capbash ls
@@ -97,7 +93,7 @@ Now, you can install any submodule, e.g. docker
 capbash install docker
 ```
 
-We are working on more submodules, as well as a registry to support third party modules.
+We are working on more bits, as well as a registry to support third party modules.
 
 # How to update capbash #
 

@@ -1,5 +1,53 @@
 #!/usr/bin/env bash
 
+add_known_host()
+{
+  DEPLOYKEYS_HOSTURL=${1-github.com}
+  mkdir $HOME/.ssh
+  ssh-keyscan -H $DEPLOYKEYS_HOSTURL 2> /dev/null >> $HOME/.ssh/known_hosts
+}
+
+install_app()
+{
+  SCRIPT_NAME=$1
+  APT_GET_NAME=${2-$SCRIPT_NAME}
+  if [[ "`which $SCRIPT_NAME 2> /dev/null`" == "" ]]; then
+    if [[ "`which apt-get 2> /dev/null`" != "" ]]; then
+      echo "Installing $SCRIPT_NAME via apt-get ($APT_GET_NAME)"
+      apt-get install -y $APT_GET_NAME
+    else
+      echo "Please install $SCRIPT_NAME."
+      exit 1
+    fi
+  fi
+}
+
+install_git()
+{
+  install_app "git"
+
+  if [[ `git config --global user.email` == "" ]]; then
+    git config --global user.email "`hostname`@localhost"
+  fi
+
+  if [[ `git config --global user.name` == "" ]]; then
+    git config --global user.name "`hostname`"
+  fi
+}
+
+install_bundler()
+{
+  if [[ "`which bundler 2> /dev/null`" == "" ]]; then
+    gem install bundler
+  fi
+}
+
+install_ruby()
+{
+  install_app "ruby"
+  install_bundler
+}
+
 usage()
 {
   printf "%b" "
@@ -10,7 +58,6 @@ Usage
 Global Actions (applies outside of any particular project)
 
   new                     - Create a new capbash project
-  init                    - Initialize a freshly checkout-out project, or when new git submodules are added
   update-self             - Updates capbash to the lastest version
   ls                      - Show all available modules (e.g. docker, nginx)
   help                    - Displays this output.
@@ -33,7 +80,7 @@ Deployment Actions (applies to a specific project, and is geared towards running
 ls_modules()
 {
   printf "%b" "
-Available capbash submodules:
+Available capbash bits (aka subtrees):
   -- apache (another webserver)
   -- cron (manage cron jobs)
   -- deploykeys (a simple public/private key manager to enable access to other servers / services)
@@ -52,11 +99,6 @@ Available capbash submodules:
 To install docker, for example, run:
   cd /path/to/your/devops/project
   capbash install docker
-
-When cloning an existing capbash project, don't forget to initialize your submodules
-  git clone my_new_ops_project.git myops
-  cd myops
-  capbash init
 "
 }
 
@@ -70,13 +112,20 @@ elif [[ "$1" == "new" ]]; then
     echo "Directory $NAME already exists, remove it and try again or pick another name please."
     exit 1
   else
+    install_git
+    install_ruby
+    add_known_host "github.com"
+
     mkdir -p $NAME
     (
-      cd $NAME &&
-      git init
-      mkdir -p ./submodules &&
-      git submodule add https://github.com/aforward/capbash-bootstrap ./submodules/bootstrap &&
-      ./submodules/bootstrap/bootstrap
+      cd $NAME && \
+      git init && \
+      mkdir -p ./bits && \
+      touch ./bits/.gitkeep && \
+      git add . && \
+      git commit -m "Initial commit" && \
+      git subtree add --prefix=bits/bootstrap --squash https://github.com/aforward/capbash-bootstrap.git f/move_to_subtree && \
+      ./bits/bootstrap/bootstrap
     )
   fi
 
@@ -85,16 +134,11 @@ elif [[ "$1" == "update-self" ]]; then
   curl -s -o $current_capbash_filename https://raw.githubusercontent.com/aforward/capbash/master/capbash
   echo "Updated $current_capbash_filename"
 
-elif [[ "$1" == "init" ]]; then
-  git submodule init
-  git submodule update
-  echo "Initialized submodules"
-
 elif [[ "$1" == "ls" ]]; then
   ls_modules
   exit 0
 
 else
   # Project specific calls, delegating to bootstrap
-  ./submodules/bootstrap/capbash $@
+  ./bits/bootstrap/capbash $@
 fi
