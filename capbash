@@ -124,7 +124,7 @@ elif [[ "$1" == "new" ]]; then
       touch ./bits/.gitkeep && \
       git add . && \
       git commit -m "Initial commit" && \
-      git subtree add --prefix=bits/bootstrap --squash https://github.com/aforward/capbash-bootstrap.git f/move_to_subtree && \
+      git subtree add --prefix=bits/bootstrap --squash https://github.com/aforward/capbash-bootstrap.git master && \
       ./bits/bootstrap/bootstrap
     )
   fi
