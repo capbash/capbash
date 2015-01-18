@@ -3,7 +3,7 @@
 add_known_host()
 {
   DEPLOYKEYS_HOSTURL=${1-github.com}
-  mkdir $HOME/.ssh
+  mkdir -p $HOME/.ssh
   ssh-keyscan -H $DEPLOYKEYS_HOSTURL 2> /dev/null >> $HOME/.ssh/known_hosts
 }
 
