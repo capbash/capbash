@@ -48,6 +48,37 @@ install_ruby()
   install_bundler
 }
 
+install_capbash()
+{
+  NAME=$1
+  install_git
+  install_ruby
+  add_known_host "github.com"
+
+  mkdir -p $NAME
+  (
+    cd $NAME && \
+    git init && \
+    mkdir -p ./bits && \
+    touch ./bits/.gitkeep && \
+    touch .gitignore && \
+    echo "assets" >> .gitignore && \
+    echo "nodes" >> .gitignore && \
+    git add . && \
+    git commit -m "Initial commit"
+  )
+  (
+    cd $NAME && \
+    [[ `git ls-remote --quiet bootstrap 2>/dev/null` == "" ]] && \
+    git remote add bootstrap https://github.com/aforward/capbash-bootstrap.git
+  )
+  (
+    cd $NAME && \
+    git subtree add --prefix=bits/bootstrap --squash bootstrap master && \
+    ./bits/bootstrap/bootstrap
+  )
+}
+
 usage()
 {
   printf "%b" "
@@ -106,31 +137,19 @@ if [[ "$1" == "help" ]]; then
   usage
   exit 0
 
+elif [[ "$1" == "migrate" ]]; then
+  NAME=${2-devops}
+  if [[ -e "$NAME/submodules/bootstrap" ]]; then
+    install_capbash $NAME
+    (cd $NAME && capbash subrm bootstrap)
+  fi
 elif [[ "$1" == "new" ]]; then
   NAME=${2-devops}
   if [[ -e $NAME ]]; then
     echo "Directory $NAME already exists, remove it and try again or pick another name please."
     exit 1
   else
-    install_git
-    install_ruby
-    add_known_host "github.com"
-
-    mkdir -p $NAME
-    (
-      cd $NAME && \
-      git init && \
-      mkdir -p ./bits && \
-      touch ./bits/.gitkeep && \
-      touch .gitignore && \
-      echo "assets" >> .gitignore && \
-      echo "nodes" >> .gitignore && \
-      git add . && \
-      git commit -m "Initial commit" && \
-      git remote add bootstrap https://github.com/aforward/capbash-bootstrap.git && \
-      git subtree add —-prefix=bits/bootstrap --squash bootstrap master && \
-      ./bits/bootstrap/bootstrap
-    )
+    install_capbash $NAME
   fi
 
 elif [[ "$1" == "update-self" ]]; then
