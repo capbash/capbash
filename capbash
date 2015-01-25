@@ -96,6 +96,7 @@ Global Actions (applies outside of any particular project)
 Project Actions (applies to a specific project, and must be run from within that project)
 
   udpate                  - Updates all project modules, including the capbash bootstrap
+  migrate                 - Migrate a project to the latest structure
   install <module>        - Installs a particular module into your project, e.g. 'capbash install docker'
   uninstall <module>      - Uninstalls the module, e.b. 'capbash uninstall nginx'
 
@@ -140,8 +141,18 @@ if [[ "$1" == "help" ]]; then
 elif [[ "$1" == "migrate" ]]; then
   NAME=${2-devops}
   if [[ -e "$NAME/submodules/bootstrap" ]]; then
-    install_capbash $NAME
-    (cd $NAME && capbash subrm bootstrap)
+    (cd $NAME && capbash migrate $NAME)
+  elif [[ -e "submodules/bootstrap" ]]; then
+    NAME=`pwd | sed 's/\/.*\///'`
+    (cd .. && install_capbash $NAME)
+    git add . && git rm -rf ./submodules/bootstrap && git commit -m "Moved bootstrap to ./bits from ./submodules"
+    cat .gitmodules | grep "\[submodule" | awk '{print $2}' | sed 's/"submodules\///' | sed 's/"]//' | while read -r submodule
+    do
+      capbash install $submodule
+      capbash subrm $submodule
+      git add . && git commit -m "Moved $submodule to ./bits from ./submodules"
+    done
+    git rm .gitmodules && git commit -m "Removing .gitmodules"
   fi
 elif [[ "$1" == "new" ]]; then
   NAME=${2-devops}
