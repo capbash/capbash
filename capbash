@@ -113,6 +113,7 @@ ls_modules()
 {
   printf "%b" "
 Available capbash bits (aka subtrees):
+
   -- apache (another webserver)
   -- cron (manage cron jobs)
   -- deploykeys (a simple public/private key manager to enable access to other servers / services)
@@ -120,6 +121,7 @@ Available capbash bits (aka subtrees):
   -- drupal (installs a drupal admin console for deploying one or more instances of drupal)
   -- elixir (installs a tagged version of elixir)
   -- git
+  -- gitlab (installs gitlab git server with a CI server)
   -- monit (for monitoring your server)
   -- mysql (installs mysql in a docker container)
   -- nginx (a webserver running mostly within a container)
