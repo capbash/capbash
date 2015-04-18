@@ -70,7 +70,7 @@ install_capbash()
   (
     cd $NAME && \
     [[ `git ls-remote --quiet bootstrap 2>/dev/null` == "" ]] && \
-    git remote add bootstrap https://github.com/aforward/capbash-bootstrap.git
+    git remote add bootstrap https://github.com/capbash/capbash-bootstrap.git
   )
   (
     cd $NAME && \
@@ -165,7 +165,7 @@ elif [[ "$1" == "new" ]]; then
 
 elif [[ "$1" == "update-self" ]]; then
   current_capbash_filename=$(which capbash)
-  curl -s -o $current_capbash_filename https://raw.githubusercontent.com/aforward/capbash/master/capbash
+  curl -s -o $current_capbash_filename https://raw.githubusercontent.com/capbash/capbash/master/capbash
   echo "Updated $current_capbash_filename"
 
 elif [[ "$1" == "ls" ]]; then

@@ -6,7 +6,7 @@ UPDATE!!! Capbash moved from submodules to subtrees.  Please remove all submodul
 A simple infrastructure tool that uses capistrano and bash to manage remote servers.
 
 This project is meant to change very little, and delegates most of its work to a bootstrap project, shown below:
-https://github.com/aforward/capbash-bootstrap
+https://github.com/capbash/capbash-bootstrap
 
 This allows you to clone the project, make it your own and still stay up on the current version.
 
@@ -15,13 +15,13 @@ This allows you to clone the project, make it your own and still stay up on the 
 You will need to download the installer and run it.  This can be down with curl, as follows:
 
 ```bash
-curl -s https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash
+curl -s https://raw.githubusercontent.com/capbash/capbash/master/capbash-installer | bash
 ```
 
 This will install capbash into /usr/local/bin/bash.  To install it somewhere else, for example:
 
 ```bash
-curl -s https://raw.githubusercontent.com/aforward/capbash/master/capbash-installer | bash -s -- --path ~/.bin
+curl -s https://raw.githubusercontent.com/capbash/capbash/master/capbash-installer | bash -s -- --path ~/.bin
 ```
 
 # Server Preconditions #
