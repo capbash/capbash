@@ -103,9 +103,10 @@ Project Actions (applies to a specific project, and must be run from within that
 Deployment Actions (applies to a specific project, and is geared towards running things on remote servers)
 
   deploy <server> <node>  - Deploys to server (e.g. 192.169.10.11) and node (install scripts located in ./nodes directory)
-  push <server>           - Synchronizes local project to remote server, but does not install / configure the node
-  pull <server>           - Synchronizes remote server to a local project (will pick up non committed/private assets and nodes)
-
+  push <server> <dir>?    - Synchronizes local project to remote server (optionally just sync the provided dir),
+                            but does not install / configure the node
+  pull <server> <dir>?    - Synchronizes remote server (optionally just sync the provided dir) to a local project
+                            (will pick up non committed/private assets and nodes)
 "
 }
 
